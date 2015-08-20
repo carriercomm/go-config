@@ -23,9 +23,5 @@ func All() []Environment {
 }
 
 func (e Environment) Parent() Environment {
-	if e != Default {
-		return Default
-	}
-
-	return nil
+	return Default
 }

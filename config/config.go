@@ -32,15 +32,27 @@ func inew(configDir string, env environment.Environment) (*Configuration, error)
 	}
 
 	var parent *Configuration
-	var err error
+	var perr error
 	if env.Parent() != env {
-		parent, err = inew(configDir, env.Parent())
-		if err != nil {
-			return nil, err
+		parent, perr = inew(configDir, env.Parent())
+		if perr != nil {
+			return nil, perr
 		}
 	}
 
-	return &Configuration{root, parent}
+	return &Configuration{root, parent}, nil
+}
+
+func (c *Configuration) String(lookup string) (string, error) {
+	if v, err := c.get(lookup); err != nil {
+		return "", err
+	} else {
+		if s, err := reflect.Coerse(v, reflect.String); err != nil {
+			return "", err
+		} else {
+			return s.(string), nil
+		}
+	}
 }
 
 func (c *Configuration) get(lookup string) (interface{}, error) {
