@@ -7,35 +7,39 @@ import (
 )
 
 func TestShallowMapLookups(t *testing.T) {
-	assertFetch("foo", "bar", map[string]interface{}{
+	root := map[string]interface{}{
 		"foo": "bar",
-	}, t)
+	}
+	assertFetch("foo", "bar", root, t)
 }
 
 func TestShallowArrayLookups(t *testing.T) {
-	assertFetch("1", "bar", []interface{}{
+	root := []interface{}{
 		"foo", "bar",
-	}, t)
+	}
+	assertFetch("1", "bar", root, t)
 }
 
 func TestNestedMapLookups(t *testing.T) {
-	assertFetch("foo.bar.baz", "donk", map[string]interface{}{
+	root := map[string]interface{}{
 		"foo": map[string]interface{}{
 			"bar": map[string]interface{}{
 				"baz": "donk",
 			},
 		},
-	}, t)
+	}
+	assertFetch("foo.bar.baz", "donk", root, t)
 }
 
 func TestNestedArrayLookups(t *testing.T) {
-	assertFetch("foo.bar.3", "donk", map[string]interface{}{
+	root := map[string]interface{}{
 		"foo": map[string]interface{}{
 			"bar": []interface{}{
 				"woot", "boop", "bop", "donk", "flub",
 			},
 		},
-	}, t)
+	}
+	assertFetch("foo.bar.3", "donk", root, t)
 }
 
 func assertFetch(lookup string, expected interface{}, root interface{}, t *testing.T) {
