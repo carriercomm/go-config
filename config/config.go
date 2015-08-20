@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/ttaylorr/go-config/environment"
+	"github.com/ttaylorr/go-config/reflect"
 )
 
 type Configuration struct {
@@ -40,4 +41,18 @@ func inew(configDir string, env environment.Environment) (*Configuration, error)
 	}
 
 	return &Configuration{root, parent}
+}
+
+func (c *Configuration) get(lookup string) (interface{}, error) {
+	i, err := reflect.Fetch(lookup, c.root)
+
+	if err != nil {
+		if c.parent != nil {
+			return c.parent.get(lookup)
+		}
+
+		return nil, err
+	}
+
+	return i, nil
 }
