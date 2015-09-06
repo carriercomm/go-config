@@ -55,6 +55,18 @@ func (c *Configuration) String(lookup string) (string, error) {
 	}
 }
 
+func (c *Configuration) Int(lookup string) (int, error) {
+	if v, err := c.get(lookup); err != nil {
+		return -1, err
+	} else {
+		if i, err := reflect.Coerse(v, reflect.Int); err != nil {
+			return -1, err
+		} else {
+			return i.(int), nil
+		}
+	}
+}
+
 func (c *Configuration) get(lookup string) (interface{}, error) {
 	i, err := reflect.Fetch(lookup, c.root)
 

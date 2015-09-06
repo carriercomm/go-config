@@ -6,12 +6,14 @@ type toType int
 
 const (
 	String toType = iota
+	Int
 )
 
 type typeConverter func(interface{}) (interface{}, error)
 
 var types map[toType]typeConverter = map[toType]typeConverter{
 	String: StringConverter,
+	Int:    IntConverter,
 }
 
 func Coerse(v interface{}, t toType) (interface{}, error) {
