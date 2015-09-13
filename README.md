@@ -48,7 +48,10 @@ An example is provided below for fetching a value out of a configuration object:
 package main
 
 func main() {
-        cfg, err := config.NewConfiguration("./config")
+        cfg, err := config.NewConfiguration(&config.Param{
+                Directory: "./config",
+                Environment: environment.Default, // optional
+        })
         if err != nil {
                 panic(err)
         }
