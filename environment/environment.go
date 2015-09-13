@@ -18,6 +18,10 @@ func Current() Environment {
 	return Default
 }
 
+func (e Environment) HasParent() bool {
+	return e.Parent() != e
+}
+
 func All() []Environment {
 	return []Environment{Production, Staging, Development, Default}
 }

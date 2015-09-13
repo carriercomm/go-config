@@ -5,4 +5,6 @@ const (
 	Staging                 = "staging"
 	Development             = "development"
 	Default                 = "default"
+
+	None = ""
 )

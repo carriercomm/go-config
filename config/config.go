@@ -14,10 +14,21 @@ type Configuration struct {
 	parent *Configuration
 }
 
-func New(configDir string) (*Configuration, error) {
-	return inew(configDir, environment.Current())
+type Param struct {
+	Directory   string
+	Environment environment.Environment
 }
 
+func New(p *Param) (*Configuration, error) {
+	e := p.Environment
+	if e == environment.None {
+		e = environment.Default
+	}
+
+	return inew(p.Directory, e)
+}
+
+// TODO(ttaylorr): clean
 func inew(configDir string, env environment.Environment) (*Configuration, error) {
 	file, err := os.Open(fmt.Sprintf("%s/%s.json", configDir, string(env)))
 	if err != nil {
