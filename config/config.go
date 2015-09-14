@@ -15,7 +15,14 @@ type Configuration struct {
 }
 
 type Param struct {
-	Directory   string
+	// Directory refers to the directory in which to search for
+	// configuration files. Can be either relative to the current path of
+	// execution, or absolute.
+	Directory string
+
+	// Environment refers to the environment for which to load
+	// configuration files. If this field is not specified, the `None`
+	// Environment const, will be passed, and promoted up to `Default`.
 	Environment environment.Environment
 }
 
